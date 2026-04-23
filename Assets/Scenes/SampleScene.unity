@@ -935,6 +935,7 @@ GameObject:
   - component: {fileID: 1748560148}
   - component: {fileID: 1748560150}
   - component: {fileID: 1748560151}
+  - component: {fileID: 1748560152}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -1025,6 +1026,23 @@ MonoBehaviour:
   acceleration: 8
   deceleration: 10
   turnAcceleration: 10
+--- !u!114 &1748560152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748560147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7b81f470826684d898b3fbd92b252b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TankGun
+  bulletPrefab: {fileID: 4840449477121193715, guid: 01c6fbf8bf54e554797c1cb042e1ee19, type: 3}
+  muzzlePoint: {fileID: 440105937}
+  tankColliders: []
+  fireCooldown: 0.25
+  bulletSpeed: 35
 --- !u!1 &1904080558
 GameObject:
   m_ObjectHideFlags: 0
