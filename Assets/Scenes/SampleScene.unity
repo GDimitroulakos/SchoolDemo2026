@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 827393832}
   - component: {fileID: 827393835}
   - component: {fileID: 827393834}
-  - component: {fileID: 827393833}
+  - component: {fileID: 827393836}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -679,27 +679,6 @@ Transform:
   - {fileID: 110000113}
   m_Father: {fileID: 1748560149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &827393833
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827393831}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &827393834
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -757,6 +736,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827393831}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &827393836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827393831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f252ba0708e9d974d90d12c94dfa9de7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TankTurretAim
+  aimCamera: {fileID: 330585545}
+  fallbackForwardReference: {fileID: 1748560149}
+  turnSpeed: 180
+  yawOffset: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,7 +812,6 @@ GameObject:
   - component: {fileID: 874851489}
   - component: {fileID: 874851492}
   - component: {fileID: 874851491}
-  - component: {fileID: 874851490}
   m_Layer: 0
   m_Name: TankBody
   m_TagString: Untagged
@@ -840,27 +834,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1748560149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &874851490
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874851488}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &874851491
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -971,8 +944,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 874851489}
   - {fileID: 827393832}
+  - {fileID: 874851489}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1748560150
