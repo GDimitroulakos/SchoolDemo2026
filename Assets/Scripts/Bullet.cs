@@ -46,7 +46,19 @@ public class Bullet : MonoBehaviour {
         Explode();
     }
 
+    /*private void OnCollisionEnter(Collision collision) {
+        if (explodeOnCollision)
+            Explode();
+        else
+            Destroy(gameObject);
+    }*/
+
     private void OnCollisionEnter(Collision collision) {
+        EnemyTankAI enemy = collision.collider.GetComponentInParent<EnemyTankAI>();
+        if (enemy != null) {
+            enemy.Hit();
+        }
+
         if (explodeOnCollision)
             Explode();
         else
