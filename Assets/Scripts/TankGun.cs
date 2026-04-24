@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class TankGun : MonoBehaviour {
     [Header("References")]
@@ -12,7 +13,7 @@ public class TankGun : MonoBehaviour {
     [Header("Firing")]
     [SerializeField] private float fireCooldown = 0.25f;
     [SerializeField] private float bulletSpeed = 35f;
-    [SerializeField] private float muzzleFlashLifetime = 0.15f;
+    [SerializeField] private float muzzleFlashLifetime = 2f;
 
     private float nextFireTime;
 
@@ -35,26 +36,32 @@ public class TankGun : MonoBehaviour {
         nextFireTime = Time.time + fireCooldown;
 
         GameObject bulletObject = Instantiate(
-                                              bulletPrefab,
-                                              muzzlePoint.position,
-                                              muzzlePoint.rotation
-                                             );
+            bulletPrefab,
+            muzzlePoint.position,
+            muzzlePoint.rotation
+        );
 
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         if (bullet != null) {
             bullet.Initialize(muzzlePoint.forward, bulletSpeed, tankColliders);
         } else {
             Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
-            if (rb != null)
+            if (rb != null) {
                 rb.linearVelocity = muzzlePoint.forward * bulletSpeed;
+            }
         }
 
         if (muzzleFlashPrefab != null && muzzleFlashPoint != null) {
             GameObject flash = Instantiate(
-                                           muzzleFlashPrefab,
-                                           muzzleFlashPoint.position,
-                                           muzzleFlashPoint.rotation
-                                          );
+                muzzleFlashPrefab,
+                muzzleFlashPoint.position,
+                muzzleFlashPoint.rotation
+            );
+
+            VisualEffect vfx = flash.GetComponent<VisualEffect>();
+            if (vfx != null) {
+                vfx.Reinit();
+            }
 
             Destroy(flash, muzzleFlashLifetime);
         }

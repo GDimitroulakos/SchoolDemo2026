@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,7 +75,7 @@ VisualEffect:
       - m_Value: 1
         m_Name: Emissive
         m_Overridden: 0
-      - m_Value: 1.65
+      - m_Value: 0
         m_Name: Burst Delay
         m_Overridden: 1
       - m_Value: 0.6
@@ -101,11 +101,17 @@ VisualEffect:
       - m_Value: {x: 8, y: 8}
         m_Name: Rocket Muzzle Flashes Texture Rows and Columns
         m_Overridden: 0
-      - m_Value: {x: 1, y: 1.3}
+      - m_Value: {x: 2, y: 2.5}
         m_Name: Rocket Muzzle Flashes Scale Min Max
         m_Overridden: 1
       - m_Value: {x: 0.65, y: 1}
         m_Name: Rocket Muzzle Flashes Lifetime Min Max
+        m_Overridden: 1
+      - m_Value: {x: 2, y: 2}
+        m_Name: Particles Scale Multiplier
+        m_Overridden: 1
+      - m_Value: {x: 20, y: 28}
+        m_Name: Glow Scale Min Max
         m_Overridden: 1
     m_Vector3f:
       m_Array:
@@ -242,6 +248,9 @@ VisualEffect:
       - m_Value: 0
         m_Name: Enable Highlights
         m_Overridden: 0
+      - m_Value: 0
+        m_Name: Single Burst Mode
+        m_Overridden: 1
 --- !u!73398921 &1528589170823801737
 VFXRenderer:
   serializedVersion: 1
@@ -260,6 +269,11 @@ VFXRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_StaticBatchInfo:
@@ -279,6 +293,8 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
