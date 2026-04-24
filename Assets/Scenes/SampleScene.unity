@@ -863,6 +863,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1956860858}
     - target: {fileID: 3391153994471520092, guid: f0720c942bb2f254f88d2c2206fff2d9, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 5777136416663757395, guid: a827a91fab0721245903839ec0d4eef1, type: 3}
+    - target: {fileID: 3391153994471520092, guid: f0720c942bb2f254f88d2c2206fff2d9, type: 3}
       propertyPath: fireCooldown
       value: 0.3
       objectReference: {fileID: 0}
@@ -873,7 +877,7 @@ PrefabInstance:
     - target: {fileID: 3391153994471520092, guid: f0720c942bb2f254f88d2c2206fff2d9, type: 3}
       propertyPath: muzzleFlashPrefab
       value: 
-      objectReference: {fileID: 4396021920071624623, guid: c43898b3b03307a46b823d77eba159cb, type: 3}
+      objectReference: {fileID: 3152428087241810131, guid: c15735057fa8c3848911192b825d7621, type: 3}
     - target: {fileID: 3391153994471520092, guid: f0720c942bb2f254f88d2c2206fff2d9, type: 3}
       propertyPath: muzzleFlashLifetime
       value: 0.4
