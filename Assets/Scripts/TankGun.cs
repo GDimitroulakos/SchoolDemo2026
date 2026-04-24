@@ -6,10 +6,13 @@ public class TankGun : MonoBehaviour {
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform muzzlePoint;
     [SerializeField] private Collider[] tankColliders;
+    [SerializeField] private GameObject muzzleFlashPrefab;
+    [SerializeField] private Transform muzzleFlashPoint;
 
     [Header("Firing")]
     [SerializeField] private float fireCooldown = 0.25f;
     [SerializeField] private float bulletSpeed = 35f;
+    [SerializeField] private float muzzleFlashLifetime = 0.15f;
 
     private float nextFireTime;
 
@@ -40,12 +43,20 @@ public class TankGun : MonoBehaviour {
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         if (bullet != null) {
             bullet.Initialize(muzzlePoint.forward, bulletSpeed, tankColliders);
-            return;
+        } else {
+            Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
+            if (rb != null)
+                rb.linearVelocity = muzzlePoint.forward * bulletSpeed;
         }
 
-        Rigidbody rb = bulletObject.GetComponent<Rigidbody>();
-        if (rb != null) {
-            rb.linearVelocity = muzzlePoint.forward * bulletSpeed;
+        if (muzzleFlashPrefab != null && muzzleFlashPoint != null) {
+            GameObject flash = Instantiate(
+                                           muzzleFlashPrefab,
+                                           muzzleFlashPoint.position,
+                                           muzzleFlashPoint.rotation
+                                          );
+
+            Destroy(flash, muzzleFlashLifetime);
         }
     }
 }
