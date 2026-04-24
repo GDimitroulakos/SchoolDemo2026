@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 public class LeopardMovement : MonoBehaviour {
@@ -14,12 +13,16 @@ public class LeopardMovement : MonoBehaviour {
     [SerializeField] private float deceleration = 10f;
     [SerializeField] private float turnAcceleration = 10f;
 
-    public Material lefttrackMaterial;
-    public Material righttrackMaterial;
-    private float leftcurrentYOffset = 0f;
-    private float rightcurrentYOffset = 0f;
-    public float scrollMultiplier = 0.5f;
+    [Header("Track Materials")]
+    [SerializeField] private Material leftTrackMaterial;
+    [SerializeField] private Material rightTrackMaterial;
 
+    [Header("Track Animation")]
+    [SerializeField] private float linearScrollMultiplier = 0.08f;
+    [SerializeField] private float turnScrollMultiplier = 0.015f;
+    [SerializeField] private bool invertLeftTrack = false;
+    [SerializeField] private bool invertRightTrack = false;
+    [SerializeField] private string uvOffsetProperty = "_UvOffset";
 
     private Rigidbody rb;
 
@@ -28,6 +31,9 @@ public class LeopardMovement : MonoBehaviour {
 
     private float currentMoveSpeed;
     private float currentTurnSpeed;
+
+    private float leftCurrentYOffset;
+    private float rightCurrentYOffset;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -40,6 +46,7 @@ public class LeopardMovement : MonoBehaviour {
     private void FixedUpdate() {
         ApplyMovement();
         ApplyRotation();
+        UpdateTrackScroll();
     }
 
     private void ReadKeyboardInput() {
@@ -74,42 +81,55 @@ public class LeopardMovement : MonoBehaviour {
         float rate = Mathf.Abs(targetSpeed) > Mathf.Abs(currentMoveSpeed) ? acceleration : deceleration;
         currentMoveSpeed = Mathf.MoveTowards(currentMoveSpeed, targetSpeed, rate * Time.fixedDeltaTime);
 
-
-
         Vector3 movement = transform.forward * currentMoveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
-
-        // track movement animation
-        if (lefttrackMaterial != null && moveInput != 0) {
-
-            float speed = moveInput * currentMoveSpeed * scrollMultiplier;
-            leftcurrentYOffset = (leftcurrentYOffset + (speed * Time.deltaTime)) % 1;
-            rightcurrentYOffset = (rightcurrentYOffset + (speed * Time.deltaTime)) % 1;
-
-            lefttrackMaterial.SetVector("_UvOffset", new Vector2(0, leftcurrentYOffset));
-            righttrackMaterial.SetVector("_UvOffset", new Vector2(0, rightcurrentYOffset));
-        }
     }
-
-    /*private void ApplyRotation() {
-        float targetTurn = turnInput * turnSpeed;
-        currentTurnSpeed = Mathf.MoveTowards(currentTurnSpeed, targetTurn, turnAcceleration * turnSpeed * Time.fixedDeltaTime);
-
-        Quaternion deltaRotation = Quaternion.Euler(0f, currentTurnSpeed * Time.fixedDeltaTime, 0f);
-        rb.MoveRotation(rb.rotation * deltaRotation);
-    }*/
 
     private void ApplyRotation() {
         float turnFactor = Mathf.Abs(currentMoveSpeed) > 0.1f ? 1f : 0.45f;
         float targetTurn = turnInput * turnSpeed * turnFactor;
 
         currentTurnSpeed = Mathf.MoveTowards(
-                                             currentTurnSpeed,
-                                             targetTurn,
-                                             turnAcceleration * turnSpeed * Time.fixedDeltaTime
-                                            );
+            currentTurnSpeed,
+            targetTurn,
+            turnAcceleration * turnSpeed * Time.fixedDeltaTime
+        );
 
         Quaternion deltaRotation = Quaternion.Euler(0f, currentTurnSpeed * Time.fixedDeltaTime, 0f);
         rb.MoveRotation(rb.rotation * deltaRotation);
+    }
+
+    private void UpdateTrackScroll() {
+        if (leftTrackMaterial == null || rightTrackMaterial == null)
+            return;
+
+        // Linear contribution: both tracks same direction.
+        float linearComponent = currentMoveSpeed * linearScrollMultiplier;
+
+        // Turning contribution:
+        // right turn => left track forward faster, right track slower/backward.
+        float turnComponent = currentTurnSpeed * turnScrollMultiplier;
+
+        float leftTrackScrollSpeed = linearComponent + turnComponent;
+        float rightTrackScrollSpeed = linearComponent - turnComponent;
+
+        if (invertLeftTrack)
+            leftTrackScrollSpeed *= -1f;
+
+        if (invertRightTrack)
+            rightTrackScrollSpeed *= -1f;
+
+        leftCurrentYOffset = Mathf.Repeat(
+            leftCurrentYOffset + leftTrackScrollSpeed * Time.fixedDeltaTime,
+            1f
+        );
+
+        rightCurrentYOffset = Mathf.Repeat(
+            rightCurrentYOffset + rightTrackScrollSpeed * Time.fixedDeltaTime,
+            1f
+        );
+
+        leftTrackMaterial.SetVector(uvOffsetProperty, new Vector2(0f, leftCurrentYOffset));
+        rightTrackMaterial.SetVector(uvOffsetProperty, new Vector2(0f, rightCurrentYOffset));
     }
 }
