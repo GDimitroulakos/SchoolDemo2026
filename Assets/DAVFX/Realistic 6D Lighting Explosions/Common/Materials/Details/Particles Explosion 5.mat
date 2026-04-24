@@ -25,6 +25,7 @@ Material:
   m_Parent: {fileID: 2100000, guid: 8510864df77aa8447aeaf0475d325ae7, type: 2}
   m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
+  - _EMISSION
   - _FADING_ON
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
@@ -50,8 +51,8 @@ Material:
     - _CameraFadingEnabled: 1
     - _Cull: 2
     - _DistortionEnabled: 0
-    - _DstBlend: 1
-    - _DstBlendAlpha: 1
+    - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _EmissionEnabled: 0
     - _FlipbookMode: 0
     - _Mode: 2

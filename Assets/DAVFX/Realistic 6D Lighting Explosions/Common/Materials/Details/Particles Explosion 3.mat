@@ -38,7 +38,8 @@ Material:
     - _CameraFadingEnabled: 1
     - _Cull: 2
     - _DistortionEnabled: 0
-    - _DstBlend: 1
+    - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _EmissionEnabled: 0
     - _FlipbookMode: 0
     - _Mode: 2
