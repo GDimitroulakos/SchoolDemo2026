@@ -61,7 +61,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &1314220677334040668
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   lifeTime: 5
-  explosionPrefab: {fileID: 6463384822213052096, guid: aa3b03fef92c7e84a8121159661af9d4, type: 3}
+  explosionPrefab: {fileID: 8708375631623421989, guid: 383a03f9d03fd434c943211033d45af5, type: 3}
   explosionCleanupTime: 8
   explodeOnCollision: 1
 --- !u!1001 &942537851357181593
