@@ -5,29 +5,13 @@ public class TankAudio : MonoBehaviour {
     [SerializeField] private AudioSource idleSource;
     [SerializeField] private AudioSource moveSource;
 
-    [Header("Reference Speeds")]
-    [SerializeField] private float maxReferenceMoveSpeed = 7f;
-    [SerializeField] private float maxReferenceTurnSpeed = 120f;
-
-    [Header("Blend")]
-    [SerializeField] private float response = 4f;
-    [SerializeField] private float turnWeight = 0.7f;
-
-    [Header("Idle Mix")]
-    [SerializeField] private float idleVolumeAtRest = 0.45f;
-    [SerializeField] private float idleVolumeAtMotion = 0.20f;
-    [SerializeField] private float idlePitchAtRest = 0.95f;
-    [SerializeField] private float idlePitchAtMotion = 1.05f;
-
-    [Header("Move Mix")]
-    [SerializeField] private float moveVolumeAtRest = 0.00f;
-    [SerializeField] private float moveVolumeAtMotion = 0.85f;
-    [SerializeField] private float movePitchAtRest = 0.85f;
-    [SerializeField] private float movePitchAtMotion = 1.20f;
+    [Header("Thresholds")]
+    [SerializeField] private float moveSpeedThreshold = 0.15f;
+    [SerializeField] private float turnSpeedThreshold = 10f;
 
     private Vector3 previousPosition;
     private float previousYaw;
-    private float activityBlend;
+    private bool wasMoving;
 
     private void Start() {
         previousPosition = transform.position;
@@ -38,6 +22,8 @@ public class TankAudio : MonoBehaviour {
 
         if (moveSource != null && moveSource.clip != null && !moveSource.isPlaying)
             moveSource.Play();
+
+        ApplyState(false);
     }
 
     private void Update() {
@@ -54,20 +40,25 @@ public class TankAudio : MonoBehaviour {
         previousPosition = transform.position;
         previousYaw = currentYaw;
 
-        float move01 = Mathf.Clamp01(planarSpeed / maxReferenceMoveSpeed);
-        float turn01 = Mathf.Clamp01(turnSpeed / maxReferenceTurnSpeed);
+        bool isMoving =
+            planarSpeed > moveSpeedThreshold ||
+            turnSpeed > turnSpeedThreshold;
 
-        float targetActivity = Mathf.Max(move01, turn01 * turnWeight);
-        activityBlend = Mathf.MoveTowards(activityBlend, targetActivity, response * Time.deltaTime);
+        if (isMoving != wasMoving) {
+            ApplyState(isMoving);
+            wasMoving = isMoving;
+        }
+    }
 
+    private void ApplyState(bool moving) {
         if (idleSource != null) {
-            idleSource.volume = Mathf.Lerp(idleVolumeAtRest, idleVolumeAtMotion, activityBlend);
-            idleSource.pitch = Mathf.Lerp(idlePitchAtRest, idlePitchAtMotion, activityBlend);
+            idleSource.volume = moving ? 0f : 1f;
+            idleSource.pitch = 1f;
         }
 
         if (moveSource != null) {
-            moveSource.volume = Mathf.Lerp(moveVolumeAtRest, moveVolumeAtMotion, activityBlend);
-            moveSource.pitch = Mathf.Lerp(movePitchAtRest, movePitchAtMotion, activityBlend);
+            moveSource.volume = moving ? 1f : 0f;
+            moveSource.pitch = 1f;
         }
     }
 }

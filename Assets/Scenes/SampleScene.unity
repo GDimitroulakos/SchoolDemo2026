@@ -850,7 +850,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: c5ee4847e717a7d46a8941ba006e6732, type: 3}
+  m_Resource: {fileID: 8300000, guid: dee2a4fe74cde7d43924f3a112e8c6a4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1448,16 +1448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankAudio
   idleSource: {fileID: 356263730}
   moveSource: {fileID: 745683560}
-  maxReferenceSpeed: 7
-  response: 4
-  idleVolumeAtStop: 0.45
-  idleVolumeAtTopSpeed: 0.2
-  idlePitchAtStop: 0.95
-  idlePitchAtTopSpeed: 1.05
-  moveVolumeAtStop: 0
-  moveVolumeAtTopSpeed: 0.85
-  movePitchAtStop: 0.85
-  movePitchAtTopSpeed: 1.2
+  moveSpeedThreshold: 0.05
+  turnSpeedThreshold: 5
 --- !u!1001 &7953997796935896627
 PrefabInstance:
   m_ObjectHideFlags: 0
